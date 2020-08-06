@@ -1,10 +1,9 @@
-import React from 'react';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
+import React, { useState } from 'react';
+import { Switch, Container, Typography, Button, Paper } from '@material-ui/core';
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles"
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import ProTip from './ProTip';
-import Button from '@material-ui/core/Button';
 
 function Copyright() {
   return (
@@ -20,18 +19,31 @@ function Copyright() {
 }
 
 export default function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  const theme = createMuiTheme({
+    palette: {
+      type: darkMode? "dark" : "light",
+    },
+  });
+  
   return (
-    <Container maxWidth="sm">
-      <Box my={4}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Create React App v4-beta example with TypeScript
-        </Typography>
-        <ProTip />
-        <Copyright />
-      </Box>
-      <Button variant="contained" color="primary">
-        Hello World
-      </Button>
-    </Container>
+    <ThemeProvider theme={theme}>
+      <Paper style={{ height: "100vh" }}>
+        <Container maxWidth="sm">
+          <Box my={4}>
+            <Typography variant="h4" component="h1" gutterBottom>
+              Create React App v4-beta example with TypeScript
+            </Typography>
+            <ProTip />
+            <Copyright />
+          </Box>
+          <Button variant="contained" color="primary">
+            Hello World
+          </Button>
+          <Switch checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
+        </Container>
+      </Paper>
+    </ThemeProvider>      
   );
 }
